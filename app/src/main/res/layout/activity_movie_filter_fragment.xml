@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.movie.MovieFilterFragment">
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Which details do you want :"
+            android:layout_marginTop="50dp"
+            android:textSize="15sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TextReleaseDate"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/editTextReleaseDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Enter Release Date"
+                    android:inputType="date" />
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/openCalender"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="date"
+                android:layout_marginTop="90dp"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textVoteAverage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/editTextVoteAverage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Enter Rating"
+                android:inputType="date" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/editTextLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Language Preferece"
+                android:inputType="date" />
+        </android.support.design.widget.TextInputLayout>
+
+
+    </RelativeLayout>
+</layout>
