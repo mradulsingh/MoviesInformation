@@ -32,8 +32,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:paddingBottom="12dp"
-            android:paddingTop="12dp"
-            android:visibility="gone" />
+            android:paddingTop="12dp" />
 
         <TextView
             android:id="@+id/releaseDate"

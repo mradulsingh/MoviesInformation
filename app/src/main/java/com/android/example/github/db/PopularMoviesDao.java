@@ -22,9 +22,4 @@ public interface PopularMoviesDao {
     @Query("SELECT * FROM MovieInfo")
     LiveData<List<MovieInfo>> getAllMovies();
 
-//    @Query("SELECT * FROM MovieInfo WHERE original_title = :itemId")
-//    LiveData<MovieInfo> getMovieById(String itemId);
-
-//    @Delete
-//    void deleteMovie(MovieInfo item);
 }

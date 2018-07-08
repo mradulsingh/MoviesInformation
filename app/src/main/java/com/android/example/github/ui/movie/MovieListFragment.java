@@ -41,10 +41,8 @@ public class MovieListFragment extends Fragment implements Injectable{
     int m = 0;
 
     public static final String LOG_TAG = MovieListFragment.class.getSimpleName();
-    public static final String API_KEY = "1629d9f319180fab65a709e65ca9a077";
-    
+
     MovieListViewModel movieListViewModel;
-    LinearLayoutManager linearLayoutManager;
 
     AutoClearedValue<ActivityMovieListFragmentBinding> autoClearedValueBinding;
     AutoClearedValue<MovieListAdapter> movieListAdapterAutoClearedValue;
@@ -77,7 +75,7 @@ public class MovieListFragment extends Fragment implements Injectable{
     }
 
     private void initRecyclerView() {
-        MovieListAdapter adapter = new MovieListAdapter(dataBindingComponent);
+        MovieListAdapter adapter = new MovieListAdapter(dataBindingComponent, this);
         autoClearedValueBinding.get().recyclerList.setAdapter(adapter);
         movieListAdapterAutoClearedValue = new AutoClearedValue<>(this, adapter);
         autoClearedValueBinding.get().recyclerList.setItemAnimator(new DefaultItemAnimator());
@@ -87,10 +85,11 @@ public class MovieListFragment extends Fragment implements Injectable{
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager)
                         recyclerView.getLayoutManager();
-
                 int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
                 if (lastPosition == movieListAdapterAutoClearedValue.get().getItemCount() - 1){
-                    movieListViewModel.loadNextPage();
+                    m = m + 1;
+                    autoClearedValueBinding.get().nextPageProgressBar.setVisibility(View.VISIBLE);
+                    movieListViewModel.loadNextPage(m);
                 }
             }
         });
@@ -137,9 +136,11 @@ public class MovieListFragment extends Fragment implements Injectable{
                 switch (resource.status) {
                     case LOADING:
                         Log.d(LOG_TAG, "loading...");
+                        autoClearedValueBinding.get().nextPageProgressBar.setVisibility(View.VISIBLE);
                         break;
                     case SUCCESS:
                         Log.d(LOG_TAG, "successful...");
+                        autoClearedValueBinding.get().nextPageProgressBar.setVisibility(View.GONE);
                         if (resource.data != null
                                 && resource.data.getMovieInfoItems() != null
                                 && !resource.data.getMovieInfoItems().isEmpty()) {
@@ -150,6 +151,7 @@ public class MovieListFragment extends Fragment implements Injectable{
                         }
                         break;
                     case ERROR:
+                        autoClearedValueBinding.get().nextPageProgressBar.setVisibility(View.GONE);
                         break;
                 }
             }

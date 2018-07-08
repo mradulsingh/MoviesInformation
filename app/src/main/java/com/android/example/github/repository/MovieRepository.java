@@ -32,8 +32,6 @@ public class MovieRepository {
     private MovieDb movieDb;
     private AppExecutors appExecutors;
 
-    private RateLimiter<String> repoListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
-
     public static final String API_KEY = "1629d9f319180fab65a709e65ca9a077";
 
     @Inject
@@ -74,8 +72,6 @@ public class MovieRepository {
                         return AbsentLiveData.create();
                     }
                 });
-
-
             }
 
             @NonNull

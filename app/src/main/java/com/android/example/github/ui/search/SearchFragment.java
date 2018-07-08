@@ -84,12 +84,7 @@ public class SearchFragment extends Fragment implements Injectable {
         searchViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchViewModel.class);
         initRecyclerView();
         RepoListAdapter rvAdapter = new RepoListAdapter(dataBindingComponent, true,
-                new RepoListAdapter.RepoClickCallback() {
-                    @Override
-                    public void onClick(Repo repo) {
-                        navigationController.navigateToRepo(repo.owner.login, repo.name);
-                    }
-                });
+                repo -> navigationController.navigateToRepo(repo.owner.login, repo.name));
         binding.get().repoList.setAdapter(rvAdapter);
         adapter = new AutoClearedValue<>(this, rvAdapter);
 
@@ -143,31 +138,25 @@ public class SearchFragment extends Fragment implements Injectable {
                 }
             }
         });
-        searchViewModel.getResults().observe(this, new Observer<Resource<List<Repo>>>() {
-            @Override
-            public void onChanged(@Nullable Resource<List<Repo>> result) {
-                binding.get().setSearchResource(result);
-                binding.get().setResultCount((result == null || result.data == null)
-                        ? 0 : result.data.size());
-                adapter.get().replace(result == null ? null : result.data);
-                binding.get().executePendingBindings();
-            }
+        searchViewModel.getResults().observe(this, result -> {
+            binding.get().setSearchResource(result);
+            binding.get().setResultCount((result == null || result.data == null)
+                    ? 0 : result.data.size());
+            adapter.get().replace(result == null ? null : result.data);
+            binding.get().executePendingBindings();
         });
 
-        searchViewModel.getLoadMoreStatus().observe(this, new Observer<SearchViewModel.LoadMoreState>() {
-            @Override
-            public void onChanged(@Nullable SearchViewModel.LoadMoreState loadingMore) {
-                if (loadingMore == null) {
-                    binding.get().setLoadingMore(false);
-                } else {
-                    binding.get().setLoadingMore(loadingMore.isRunning());
-                    String error = loadingMore.getErrorMessageIfNotHandled();
-                    if (error != null) {
-                        Snackbar.make(binding.get().loadMoreBar, error, Snackbar.LENGTH_LONG).show();
-                    }
+        searchViewModel.getLoadMoreStatus().observe(this, loadingMore -> {
+            if (loadingMore == null) {
+                binding.get().setLoadingMore(false);
+            } else {
+                binding.get().setLoadingMore(loadingMore.isRunning());
+                String error = loadingMore.getErrorMessageIfNotHandled();
+                if (error != null) {
+                    Snackbar.make(binding.get().loadMoreBar, error, Snackbar.LENGTH_LONG).show();
                 }
-                binding.get().executePendingBindings();
             }
+            binding.get().executePendingBindings();
         });
     }
 

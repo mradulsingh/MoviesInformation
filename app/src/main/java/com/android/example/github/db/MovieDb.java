@@ -13,23 +13,6 @@ public abstract class MovieDb extends RoomDatabase {
 
     abstract public PopularMoviesDao movieDao();
 
-//    /**
-//     * Singleton object of this class so that no other object of database is created
-//     */
-//    private static volatile MovieDb instance;
-//
-//    static synchronized MovieDb getDatabase(Context context) {
-//        if (instance == null){
-//            synchronized (MovieDb.class){
-//                if (instance == null){
-//                    //create database
-//                }
-//            }
-//        }
-//
-//        return instance;
-//    }
-
     private static MovieDb create(final Context context) {
         return Room.databaseBuilder(
                 context,

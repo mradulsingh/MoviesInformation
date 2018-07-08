@@ -56,7 +56,6 @@ public class MovieInfo implements Serializable {
     @SerializedName("vote_count")
     private Integer voteCount;
 
-    @NonNull
     @SerializedName("poster_path")
     private String moviePosterURL;
 

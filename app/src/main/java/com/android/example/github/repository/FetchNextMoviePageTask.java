@@ -26,7 +26,8 @@ public class FetchNextMoviePageTask implements Runnable {
     private final MovieDb movieDb;
     private int pageIndex;
 
-    public FetchNextMoviePageTask(String movieType, MovieService movieService, MovieDb movieDb, int pageIndex) {
+    public FetchNextMoviePageTask(String movieType, MovieService movieService,
+                                  MovieDb movieDb, int pageIndex) {
         this.movieType = movieType;
         this.movieService = movieService;
         this.movieDb = movieDb;

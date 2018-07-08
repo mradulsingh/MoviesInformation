@@ -21,29 +21,15 @@ import com.android.example.github.vo.MovieInfo;
 import com.android.example.github.vo.MovieResponse;
 import com.android.example.github.vo.Resource;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.view.View.GONE;
-import static com.android.example.github.ui.movie.MovieListFragment.API_KEY;
-
 public class MovieListViewModel extends ViewModel {
-
-    private boolean isLoading = false;
-    private boolean isLastPage = false;
 
     private MutableLiveData<Integer> nextPageIndex = new MutableLiveData<>();
 
     private Integer pageIndex = 1;
 
-    private String movieType = RequestConstant.MovieListType.popular;
+    private String movieType = RequestConstant.MovieListType.topRated;
 
     private LiveData<Resource<MovieResponse>> movies;
 
@@ -73,9 +59,10 @@ public class MovieListViewModel extends ViewModel {
     }
 
     @VisibleForTesting
-    public void loadNextPage() {
+    public void loadNextPage(int m) {
         if (nextPageHandler.hasMore && nextPageIndex.getValue() >= 0)
-            nextPageHandler.getNextPage(nextPageIndex.getValue(), movieType);
+            Log.d("page index ...." , nextPageIndex.getValue().toString() + m);
+            nextPageHandler.getNextPage(nextPageIndex.getValue() + m, movieType);
     }
 
     public void setMovieType(String movieType) {
@@ -141,6 +128,7 @@ public class MovieListViewModel extends ViewModel {
             } else {
                 switch (result.status) {
                     case SUCCESS:
+
                         hasMore = Boolean.TRUE.equals(result.data);
                         unregister();
                         loadMoreState.setValue(new MovieListViewModel.LoadMoreState(false, null));
@@ -158,9 +146,6 @@ public class MovieListViewModel extends ViewModel {
             if (nextPageLiveData != null) {
                 nextPageLiveData.removeObserver(this);
                 nextPageLiveData = null;
-//                if (hasMore) {
-//                    query = null;
-//                }
             }
         }
 
